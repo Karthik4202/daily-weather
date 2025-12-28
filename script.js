@@ -28,8 +28,6 @@ const weatherData = async (city) => {
 
   console.log(weatherReport1Json);
 
-  const apikey = openapikey;
-
   const weatherReport2 = await fetch('/.netlify/functions/weather', {
     method: 'POST',
     body: JSON.stringify({
