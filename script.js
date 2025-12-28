@@ -30,9 +30,13 @@ const weatherData = async (city) => {
 
   const apikey = openapikey;
 
-  const weatherReport2 = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`
-  );
+  const weatherReport2 = await fetch('/.netlify/functions/weather', {
+    method: 'POST',
+    body: JSON.stringify({
+      lat: latitude,
+      lon: longitude
+  })
+});
   const weatherReport2Json = await weatherReport2.json();
   console.log(weatherReport2Json);
 
