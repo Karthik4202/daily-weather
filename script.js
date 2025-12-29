@@ -1,6 +1,7 @@
 const weatherData = async (city) => {
+  const searchcity= String(city).trim();
   const result = await fetch(
-    `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`
+    `https://geocoding-api.open-meteo.com/v1/search?name=${searchcity}&count=1`
   );
   const data = await result.json();
   console.log(data);
