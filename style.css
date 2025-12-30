@@ -6,7 +6,12 @@
     font-family: poppins,sans-serif;
 }
 body{
-   background-color: #effcff;
+    margin: 0;
+    min-height: 100vh;
+    background-color: #effcff;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 main{
     margin-top: 3rem;

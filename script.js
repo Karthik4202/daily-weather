@@ -114,44 +114,44 @@ const weatherData = async (city) => {
 
 
 const weatherMap = {
-  0:  { day: "Sunny", night: "Clear night", dayColor: "#8EC5FC", nightColor: "#1F3B73" },
-  1:  { day: "Mainly clear", night: "Mainly clear night", dayColor: "#8EC5FC", nightColor: "#1F3B73" },
-  2:  { day: "Partly cloudy", night: "Partly cloudy night", dayColor: "#AFC8FF", nightColor: "#2A3F6E" },
-  3:  { day: "Overcast", night: "Overcast", dayColor: "#9EA7B3", nightColor: "#2A2E36" },
+  0:  { day: "Sunny", night: "Clear night", dayColor: "#8EC5FC", nightColor: "#1F3B73", dayurl:"sunny.jpg", nighturl:"night.jpg" },
+  1:  { day: "Mainly clear", night: "Mainly clear night", dayColor: "#8EC5FC", nightColor: "#1F3B73", dayurl:"sunny.jpg", nighturl:"night.jpg"},
+  2:  { day: "Partly cloudy", night: "Partly cloudy night", dayColor: "#AFC8FF", nightColor: "#2A3F6E", dayurl:"partlycloudy.jpg", nighturl:"night.jpg" },
+  3:  { day: "Overcast", night: "Overcast", dayColor: "#9EA7B3", nightColor: "#2A2E36", dayurl:"overcast.jpg", nighturl:"overcast-night.jpg" },
 
-  45: { day: "Fog", night: "Fog", dayColor: "#BFC6CF", nightColor: "#3A3F47" },
-  48: { day: "Rime fog", night: "Rime fog", dayColor: "#C9D2DD", nightColor: "#3F444D" },
+  45: { day: "Fog", night: "Fog", dayColor: "#BFC6CF", nightColor: "#3A3F47", dayurl:"fog.jpg", nighturl:"night.jpg" },
+  48: { day: "Rime fog", night: "Rime fog", dayColor: "#C9D2DD", nightColor: "#3F444D", dayurl:"fog.jpg", nighturl:"night.jpg" },
 
-  51: { day: "Light drizzle", night: "Light drizzle", dayColor: "#9EB7D9", nightColor: "#27364E" },
-  53: { day: "Moderate drizzle", night: "Moderate drizzle", dayColor: "#8FA7CC", nightColor: "#223049" },
-  55: { day: "Dense drizzle", night: "Dense drizzle", dayColor: "#7C93B5", nightColor: "#1C283B" },
+  51: { day: "Light drizzle", night: "Light drizzle", dayColor: "#9EB7D9", nightColor: "#27364E", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
+  53: { day: "Moderate drizzle", night: "Moderate drizzle", dayColor: "#8FA7CC", nightColor: "#223049", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
+  55: { day: "Dense drizzle", night: "Dense drizzle", dayColor: "#7C93B5", nightColor: "#1C283B", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
 
-  56: { day: "Light freezing drizzle", night: "Light freezing drizzle", dayColor: "#AFCBDD", nightColor: "#304559" },
-  57: { day: "Heavy freezing drizzle", night: "Heavy freezing drizzle", dayColor: "#99B7CC", nightColor: "#293A4C" },
+  56: { day: "Light freezing drizzle", night: "Light freezing drizzle", dayColor: "#AFCBDD", nightColor: "#304559", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
+  57: { day: "Heavy freezing drizzle", night: "Heavy freezing drizzle", dayColor: "#99B7CC", nightColor: "#293A4C", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
 
-  61: { day: "Light rain", night: "Light rain", dayColor: "#6FA3D2", nightColor: "#233A56" },
-  63: { day: "Moderate rain", night: "Moderate rain", dayColor: "#5B8FBE", nightColor: "#1E2F47" },
-  65: { day: "Heavy rain", night: "Heavy rain", dayColor: "#4A6FA5", nightColor: "#18263A" },
+  61: { day: "Light rain", night: "Light rain", dayColor: "#6FA3D2", nightColor: "#233A56", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
+  63: { day: "Moderate rain", night: "Moderate rain", dayColor: "#5B8FBE", nightColor: "#1E2F47", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
+  65: { day: "Heavy rain", night: "Heavy rain", dayColor: "#4A6FA5", nightColor: "#18263A", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
 
-  66: { day: "Freezing rain", night: "Freezing rain", dayColor: "#7EA6C7", nightColor: "#26384F" },
-  67: { day: "Freezing rain", night: "Freezing rain", dayColor: "#7EA6C7", nightColor: "#26384F" },
+  66: { day: "Freezing rain", night: "Freezing rain", dayColor: "#7EA6C7", nightColor: "#26384F", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
+  67: { day: "Freezing rain", night: "Freezing rain", dayColor: "#7EA6C7", nightColor: "#26384F", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
 
-  71: { day: "Light snow", night: "Light snow", dayColor: "#E6F2FF", nightColor: "#2B3E5A" },
-  73: { day: "Snow", night: "Snow", dayColor: "#D6E9FF", nightColor: "#233447" },
-  75: { day: "Heavy snow", night: "Heavy snow", dayColor: "#C2DBF5", nightColor: "#1A2738" },
+  71: { day: "Light snow", night: "Light snow", dayColor: "#E6F2FF", nightColor: "#2B3E5A", dayurl:"light-snow.jpg", nighturl:"night-light-snow.jpg" },
+  73: { day: "Snow", night: "Snow", dayColor: "#D6E9FF", nightColor: "#233447", dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
+  75: { day: "Heavy snow", night: "Heavy snow", dayColor: "#C2DBF5", nightColor: "#1A2738",dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
 
-  77: { day: "Snow grains", night: "Snow grains", dayColor: "#DFEAF7", nightColor: "#2A3A4E" },
+  77: { day: "Snow grains", night: "Snow grains", dayColor: "#DFEAF7", nightColor: "#2A3A4E",dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
 
-  80: { day: "Light rain showers", night: "Light rain showers", dayColor: "#80B3E0", nightColor: "#223A56" },
-  81: { day: "Rain showers", night: "Rain showers", dayColor: "#6FA3D2", nightColor: "#1E314A" },
-  82: { day: "Heavy rain showers", night: "Heavy rain showers", dayColor: "#507EAD", nightColor: "#17273A" },
+  80: { day: "Light rain showers", night: "Light rain showers", dayColor: "#80B3E0", nightColor: "#223A56", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
+  81: { day: "Rain showers", night: "Rain showers", dayColor: "#6FA3D2", nightColor: "#1E314A", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
+  82: { day: "Heavy rain showers", night: "Heavy rain showers", dayColor: "#507EAD", nightColor: "#17273A", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
 
-  85: { day: "Light snow showers", night: "Light snow showers", dayColor: "#E6F4FF", nightColor: "#2C3F5C" },
-  86: { day: "Heavy snow showers", night: "Heavy snow showers", dayColor: "#CCE3F8", nightColor: "#1F2F44" },
+  85: { day: "Light snow showers", night: "Light snow showers", dayColor: "#E6F4FF", nightColor: "#2C3F5C", dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
+  86: { day: "Heavy snow showers", night: "Heavy snow showers", dayColor: "#CCE3F8", nightColor: "#1F2F44", dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
 
-  95: { day: "Thunderstorm", night: "Thunderstorm", dayColor: "#4F5D75", nightColor: "#121A24" },
-  96: { day: "Thunderstorm with hail", night: "Thunderstorm with hail", dayColor: "#435065", nightColor: "#0F1620" },
-  99: { day: "Severe thunderstorm", night: "Severe thunderstorm", dayColor: "#2F3A4A", nightColor: "#0B0F15" },
+  95: { day: "Thunderstorm", night: "Thunderstorm", dayColor: "#4F5D75", nightColor: "#121A24",dayurl:"thunderstorm.jpg", nighturl:"thunderstorm-night.jpg" },
+  96: { day: "Thunderstorm with hail", night: "Thunderstorm with hail", dayColor: "#435065", nightColor: "#0F1620", dayurl:"thunderstorm.jpg", nighturl:"thunderstorm-night.jpg" },
+  99: { day: "Severe thunderstorm", night: "Severe thunderstorm", dayColor: "#2F3A4A", nightColor: "#0B0F15", dayurl:"heavy-thunderstorm-day.jpg", nighturl:"heavy-thunderstorm-night.jpg" },
 };
 
 
@@ -159,8 +159,9 @@ function getWeatherText(code, isDay) {
   const item = weatherMap[code];
   if (!item) return "Unknown weather";
 
-  document.querySelector("body").style.backgroundColor=isDay === "Day"?item.dayColor : item.nightColor
+  document.querySelector("body").style.backgroundImage=isDay === "Day"?`url(${item.dayurl})` : `url(${item.nighturl})`
   document.querySelector("body").style.color=isDay === "Day"? "black" : "white"
+
   if(isDay === "Day"){
     document.querySelector(".windimg").classList.remove("windcolor")
   }else{
