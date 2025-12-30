@@ -159,7 +159,7 @@ function getWeatherText(code, isDay) {
   const item = weatherMap[code];
   if (!item) return "Unknown weather";
 
-  document.querySelector("body").style.backgroundImage=isDay === "Day"?`url(${item.dayurl})` : `url(${item.nighturl})`
+  document.querySelector("body").style.backgroundImage=isDay === "Day"?`url(images/${item.dayurl})` : `url(images/${item.nighturl})`
   document.querySelector("body").style.color=isDay === "Day"? "black" : "white"
 
   if(isDay === "Day"){
