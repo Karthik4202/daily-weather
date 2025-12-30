@@ -4,7 +4,6 @@ const weatherData = async (city) => {
     `https://geocoding-api.open-meteo.com/v1/search?name=${searchcity}&count=1`
   );
   const data = await result.json();
-  console.log(data);
 
   let latitude;
   let longitude;
@@ -27,8 +26,6 @@ const weatherData = async (city) => {
   );
   const weatherReport1Json = await weatherReport1.json();
 
-  console.log(weatherReport1Json);
-
   const weatherReport2 = await fetch('/.netlify/functions/weather', {
     method: 'POST',
     body: JSON.stringify({
@@ -37,10 +34,8 @@ const weatherData = async (city) => {
   })
 });
   const weatherReport2Json = await weatherReport2.json();
-  console.log(weatherReport2Json);
 
   const description = weatherReport2Json.weather[0].main;
-  console.log(description);
 
   const updatedTime = weatherReport1Json.current_weather.time + "Z";
 
