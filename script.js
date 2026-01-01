@@ -19,20 +19,17 @@ const weatherData = async (city) => {
     return 
   }
   
-  
-
   const weatherReport1 = await fetch(
     `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m`
   );
   const weatherReport1Json = await weatherReport1.json();
 
-  const weatherReport2 = await fetch('/.netlify/functions/weather', {
-    method: 'POST',
-    body: JSON.stringify({
-      lat: latitude,
-      lon: longitude
-  })
-});
+  const API_KEY = "1d246c4c8205d8d4f8f0f874bbc68637"
+
+  const weatherReport2 = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
+  );
+
   const weatherReport2Json = await weatherReport2.json();
 
   const description = weatherReport2Json.weather[0].main;
