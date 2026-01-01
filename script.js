@@ -152,7 +152,7 @@ function getWeatherText(code, isDay) {
   if (!item) return "Unknown weather";
 
   document.querySelector("body").style.backgroundImage=isDay === "Day"?`url(images/${item.dayurl})` : `url(images/${item.nighturl})`
-  document.querySelector("body").style.color=isDay === "Day"? "black" : "white"
+  document.querySelector("body").style.color= isDay === "Day"? "black" : "white"
 
   if(isDay === "Day"){
     document.querySelector(".windimg").classList.remove("windcolor")
