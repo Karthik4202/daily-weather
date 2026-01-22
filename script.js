@@ -163,10 +163,22 @@ function getWeatherText(code, isDay) {
   return isDay === "Day" ? item.day : item.night;
 }
 
-document.querySelector("#search").addEventListener('click',()=>{
-    const city = document.querySelector('input').value;
-    weatherData(city);
-})
+document.querySelector("#search").addEventListener("click", () => {
+  const city = document.querySelector("input").value.trim();
+  if (!city) {
+    alert("Please enter a city name");
+    return;
+  }
+  weatherData(city);
+});
+
+
+document.querySelector("input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    weatherData(e.target.value);
+  }
+});
+
 
 
 document.querySelector(".nav-logo").addEventListener('click',()=>{
