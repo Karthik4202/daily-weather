@@ -1,187 +1,192 @@
-const weatherData = async (city) => {
-  const searchcity= String(city).trim();
-  const result = await fetch(
-    `https://geocoding-api.open-meteo.com/v1/search?name=${searchcity}&count=1`
-  );
-  const data = await result.json();
+const API_KEY = "1d246c4c8205d8d4f8f0f874bbc68637";
 
-  let latitude;
-  let longitude;
-  let country;
-
-  try {
-    latitude = data.results[0].latitude;
-    longitude = data.results[0].longitude;
-    country = data.results[0].country;
-  } catch (error) {
-    alert("Please Enter Valid City")
-    console.log("Invalid City")
-    return 
-  }
-  
-  const weatherReport1 = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&hourly=temperature_2m,relativehumidity_2m`
-  );
-  const weatherReport1Json = await weatherReport1.json();
-
-  const API_KEY = "1d246c4c8205d8d4f8f0f874bbc68637"
-
-  const weatherReport2 = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
-  );
-
-  const weatherReport2Json = await weatherReport2.json();
-
-  const description = weatherReport2Json.weather[0].main;
-
-  const updatedTime = weatherReport1Json.current_weather.time + "Z";
-
-  const istTime = new Date(updatedTime).toLocaleTimeString("en-IN", {
-    timeZone: "Asia/Kolkata",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
-
-  const feelsLike = Math.round(weatherReport2Json.main.feels_like - 273.15);
-  const temperature = Math.round(weatherReport2Json.main.temp - 273.15);
-  const mintemp = Math.round(weatherReport2Json.main.temp_min - 273.15);
-  const maxtemp = Math.round(weatherReport2Json.main.temp_max - 273.15);
-  const windspeed = Math.round(weatherReport2Json.wind.speed * 3.6).toFixed(1);
-  const humidity = weatherReport2Json.main.humidity;
-  const isDay = weatherReport1Json.current_weather.is_day === 1 ? "Day" : "Night";
-  const countrycode = data.results[0].country_code;
-
-  const weathercode = weatherReport1Json.current_weather.weathercode;
-  function getDirection(deg) {
-    const dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-    return dirs[Math.round(deg / 45) % 8];
-  }
-
-  const direction = getDirection(weatherReport2Json.wind.deg);
-
-  //sunrise //sunset
-  const sunrise = weatherReport2Json.sys.sunrise;
-  const sunset = weatherReport2Json.sys.sunset;
-
-  const sunriseIST = new Date(sunrise * 1000).toLocaleTimeString("en-IN", {
-    timeZone: "Asia/Kolkata",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
-
-  const sunsetIST = new Date(sunset * 1000).toLocaleTimeString("en-IN", {
-    timeZone: "Asia/Kolkata",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
-
-  const iconcode = weatherReport2Json.weather[0].icon;
-
-  const weathertext = getWeatherText(weathercode, isDay);
-
-  const currentcity = data.results[0].name
-
-  document.querySelector("body").style.backgroundColor=
-  
-
-  document.querySelector("#updated").innerHTML=`Last Updated :- ${istTime}`
-  document.querySelector("#description").innerHTML=`Desc :- ${description}`
-  document.querySelector("#feelslike").innerHTML=`Feels Like :- ${feelsLike}°C`
-  document.querySelector("#windspeed").innerHTML=`${windspeed} km/hr`
-  document.querySelector("#winddirection").innerHTML=`Towards ${direction}`
-  document.querySelector("#humidity").innerHTML=`Humidity :- ${humidity}%`
-  document.querySelector("#mintemp").innerHTML=`Min Temp :- ${mintemp}°C`
-  document.querySelector("#maxtemp").innerHTML=`Max Temp :- ${maxtemp}°C`
-  document.querySelector("#city").innerHTML=`${currentcity}, ${country}`
-  document.querySelector("#condition").innerHTML=`${weathertext}`
-  document.querySelector("#temperature").innerHTML=`${temperature}°C`
-  document.querySelector("#isday").innerHTML=`${isDay}`
-  document.querySelector("#isdaylogo").src=`images/${isDay}.svg`
-  document.querySelector("#condition-logo").src=`https://openweathermap.org/img/wn/${iconcode}@2x.png`
-
+const state = {
+  elements: {},
 };
 
-
-const weatherMap = {
-  0:  { day: "Sunny", night: "Clear night", dayColor: "#8EC5FC", nightColor: "#1F3B73", dayurl:"sunny.jpg", nighturl:"night.jpg" },
-  1:  { day: "Mainly clear", night: "Mainly clear night", dayColor: "#8EC5FC", nightColor: "#1F3B73", dayurl:"sunny.jpg", nighturl:"night.jpg"},
-  2:  { day: "Partly cloudy", night: "Partly cloudy night", dayColor: "#AFC8FF", nightColor: "#2A3F6E", dayurl:"partlycloudy.jpg", nighturl:"night.jpg" },
-  3:  { day: "Overcast", night: "Overcast", dayColor: "#9EA7B3", nightColor: "#2A2E36", dayurl:"overcast.jpg", nighturl:"overcast-night.jpg" },
-
-  45: { day: "Fog", night: "Fog", dayColor: "#BFC6CF", nightColor: "#3A3F47", dayurl:"fog.jpg", nighturl:"night.jpg" },
-  48: { day: "Rime fog", night: "Rime fog", dayColor: "#C9D2DD", nightColor: "#3F444D", dayurl:"fog.jpg", nighturl:"night.jpg" },
-
-  51: { day: "Light drizzle", night: "Light drizzle", dayColor: "#9EB7D9", nightColor: "#27364E", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
-  53: { day: "Moderate drizzle", night: "Moderate drizzle", dayColor: "#8FA7CC", nightColor: "#223049", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
-  55: { day: "Dense drizzle", night: "Dense drizzle", dayColor: "#7C93B5", nightColor: "#1C283B", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
-
-  56: { day: "Light freezing drizzle", night: "Light freezing drizzle", dayColor: "#AFCBDD", nightColor: "#304559", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
-  57: { day: "Heavy freezing drizzle", night: "Heavy freezing drizzle", dayColor: "#99B7CC", nightColor: "#293A4C", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
-
-  61: { day: "Light rain", night: "Light rain", dayColor: "#6FA3D2", nightColor: "#233A56", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
-  63: { day: "Moderate rain", night: "Moderate rain", dayColor: "#5B8FBE", nightColor: "#1E2F47", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
-  65: { day: "Heavy rain", night: "Heavy rain", dayColor: "#4A6FA5", nightColor: "#18263A", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
-
-  66: { day: "Freezing rain", night: "Freezing rain", dayColor: "#7EA6C7", nightColor: "#26384F", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
-  67: { day: "Freezing rain", night: "Freezing rain", dayColor: "#7EA6C7", nightColor: "#26384F", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
-
-  71: { day: "Light snow", night: "Light snow", dayColor: "#E6F2FF", nightColor: "#2B3E5A", dayurl:"light-snow.jpg", nighturl:"night-light-snow.jpg" },
-  73: { day: "Snow", night: "Snow", dayColor: "#D6E9FF", nightColor: "#233447", dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
-  75: { day: "Heavy snow", night: "Heavy snow", dayColor: "#C2DBF5", nightColor: "#1A2738",dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
-
-  77: { day: "Snow grains", night: "Snow grains", dayColor: "#DFEAF7", nightColor: "#2A3A4E",dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
-
-  80: { day: "Light rain showers", night: "Light rain showers", dayColor: "#80B3E0", nightColor: "#223A56", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
-  81: { day: "Rain showers", night: "Rain showers", dayColor: "#6FA3D2", nightColor: "#1E314A", dayurl:"light-drizzle.jpg", nighturl:"drizzle-night.jpg" },
-  82: { day: "Heavy rain showers", night: "Heavy rain showers", dayColor: "#507EAD", nightColor: "#17273A", dayurl:"day-rain.jpg", nighturl:"night-rain.jpg" },
-
-  85: { day: "Light snow showers", night: "Light snow showers", dayColor: "#E6F4FF", nightColor: "#2C3F5C", dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
-  86: { day: "Heavy snow showers", night: "Heavy snow showers", dayColor: "#CCE3F8", nightColor: "#1F2F44", dayurl:"heavy-snow.jpg", nighturl:"heavy-night-snow.jpg" },
-
-  95: { day: "Thunderstorm", night: "Thunderstorm", dayColor: "#4F5D75", nightColor: "#121A24",dayurl:"thunderstorm.jpg", nighturl:"thunderstorm-night.jpg" },
-  96: { day: "Thunderstorm with hail", night: "Thunderstorm with hail", dayColor: "#435065", nightColor: "#0F1620", dayurl:"thunderstorm.jpg", nighturl:"thunderstorm-night.jpg" },
-  99: { day: "Severe thunderstorm", night: "Severe thunderstorm", dayColor: "#2F3A4A", nightColor: "#0B0F15", dayurl:"heavy-thunderstorm-day.jpg", nighturl:"heavy-thunderstorm-night.jpg" },
+const weatherBg = {
+  clear: "linear-gradient(135deg, #f6d365 0%, #fda085 100%)",
+  clouds: "linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%)",
+  rain: "linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%)",
+  drizzle: "linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)",
+  thunderstorm: "linear-gradient(135deg, #373b44 0%, #4286f4 100%)",
+  snow: "linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%)",
+  mist: "linear-gradient(135deg, #3e5151 0%, #decba4 100%)",
+  default: "linear-gradient(135deg, #ece9e6 0%, #ffffff 100%)",
 };
 
+document.addEventListener("DOMContentLoaded", init);
 
-function getWeatherText(code, isDay) {
-  const item = weatherMap[code];
-  if (!item) return "Unknown weather";
-
-  document.querySelector("body").style.backgroundImage=isDay === "Day"?`url(images/${item.dayurl})` : `url(images/${item.nighturl})`
-  document.querySelector("body").style.color= isDay === "Day"? "black" : "white"
-
-  if(isDay === "Day"){
-    document.querySelector(".windimg").classList.remove("windcolor")
-  }else{
-    document.querySelector(".windimg").classList.add("windcolor")
-  }
-
-  return isDay === "Day" ? item.day : item.night;
+function init() {
+  state.elements.app = document.getElementById("app");
+  renderBaseUI();
 }
 
-document.querySelector("#search").addEventListener("click", () => {
-  const city = document.querySelector("input").value.trim();
-  if (!city) {
-    alert("Please enter a city name");
-    return;
+function renderBaseUI() {
+  state.elements.app.innerHTML = `
+    <header class="app-header">
+      <div class="title">Weather<span class="highlight">Now</span></div>
+      <div class="search-wrapper">
+        <input type="text" id="city-input" placeholder="Search city..." />
+        <button id="city-btn">Go</button>
+      </div>
+    </header>
+    <main class="main-area">
+      <div class="loader hidden">Loading...</div>
+      <div class="weather-card hidden" id="weather-card"></div>
+    </main>
+  `;
+
+  state.elements.searchInput = document.getElementById("city-input");
+  state.elements.searchBtn = document.getElementById("city-btn");
+  state.elements.loader = document.querySelector(".loader");
+  state.elements.weatherCard = document.getElementById("weather-card");
+
+  state.elements.searchBtn.addEventListener("click", handleSearch);
+  state.elements.searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleSearch();
+  });
+}
+
+async function handleSearch() {
+  const city = state.elements.searchInput.value.trim();
+  if (!city) return alert("Please enter a city name");
+  showLoader();
+  try {
+    const data = await fetchWeather(city);
+    populateWeather(data);
+  } catch (err) {
+    alert(err.message || "Could not get weather");
+  } finally {
+    hideLoader();
   }
-  weatherData(city);
-});
+}
 
+async function fetchWeather(city) {
+  const geoResp = await fetch(
+    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+      city,
+    )}&count=1`,
+  );
+  const geo = await geoResp.json();
+  if (!geo.results || !geo.results.length)
+    throw new Error("Location not found");
+  const { latitude, longitude, name, country } = geo.results[0];
 
-document.querySelector("input").addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    weatherData(e.target.value);
+  const weatherResp = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`,
+  );
+  const weather = await weatherResp.json();
+
+  // fetch 5-day daily forecast via onecall API (unused if preferred)
+  const onecallResp = await fetch(
+    `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=current,minutely,hourly,alerts&appid=${API_KEY}&units=metric`,
+  );
+  const forecast = await onecallResp.json();
+
+  // also fetch 3-hour interval forecast by city name
+  const forecast3hResp = await fetch(
+    `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(
+      city,
+    )}&appid=${API_KEY}&units=metric`,
+  );
+  const forecast3h = await forecast3hResp.json();
+  console.log("forecast3h response", forecast3h);
+
+  return { weather, location: { name, country }, forecast, forecast3h };
+}
+
+function populateWeather({ weather, location, forecast, forecast3h }) {
+  const w = weather.weather[0];
+  const main = w.main.toLowerCase();
+  const gradient = weatherBg[main] || weatherBg.default;
+  document.body.style.background = gradient;
+
+  const html = `
+    <div class="loc">${location.name}, ${location.country}</div>
+    <div class="temp">${Math.round(weather.main.temp)}°C</div>
+    <div class="cond">
+      <img src="https://openweathermap.org/img/wn/${w.icon}@2x.png" alt="${w.description}"/>
+      <span>${w.description}</span>
+    </div>
+    <div class="details">
+      <div class="detail-item"><span class="icon">🌡️</span><span>Feels like ${Math.round(weather.main.feels_like)}°C</span></div>
+      <div class="detail-item"><span class="icon">💧</span><span>Humidity ${weather.main.humidity}%</span></div>
+      <div class="detail-item"><span class="icon">💨</span><span>Wind ${Math.round(weather.wind.speed * 3.6)} km/h ${getDirection(
+        weather.wind.deg,
+      )}</span></div>
+      <div class="detail-item"><span class="icon">⬇️</span><span>Min ${Math.round(weather.main.temp_min)}°C</span></div>
+      <div class="detail-item"><span class="icon">⬆️</span><span>Max ${Math.round(weather.main.temp_max)}°C</span></div>
+    </div>
+    <div class="update">Updated: ${new Date(
+      weather.dt * 1000,
+    ).toLocaleTimeString()}</div>
+  `;
+  let forecastHtml = "";
+  if (forecast && forecast.daily) {
+    forecastHtml = renderForecast(forecast.daily);
   }
-});
 
+  let listHtml = "";
+  if (forecast3h && forecast3h.list) {
+    listHtml = renderThreeHour(forecast3h.list);
+  }
 
+  // inject forecast into card
+  state.elements.weatherCard.innerHTML = html + forecastHtml + listHtml;
+  state.elements.weatherCard.classList.remove("hidden");
+}
 
-document.querySelector(".nav-logo").addEventListener('click',()=>{
-  location.reload();
-})
+function renderForecast(daily) {
+  // show next 5 days excluding today
+  const items = daily
+    .slice(1, 6)
+    .map((d) => {
+      const dayName = new Date(d.dt * 1000).toLocaleDateString("en-US", {
+        weekday: "short",
+      });
+      const icon = d.weather[0].icon;
+      const desc = d.weather[0].description;
+      return `<div class="forecast-day">
+        <div class="f-day">${dayName}</div>
+        <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${desc}" />
+        <div class="f-temp">${Math.round(d.temp.max)}° / ${Math.round(d.temp.min)}°</div>
+      </div>`;
+    })
+    .join("");
+  return `<div id="forecast" class="forecast">${items}</div>`;
+}
 
+function renderThreeHour(list) {
+  // take up to 7 entries
+  const items = list
+    .slice(0, 7)
+    .map((it) => {
+      const time = new Date(it.dt * 1000).toLocaleTimeString("en-US", {
+        hour: "numeric",
+        hour12: true,
+      });
+      const icon = it.weather[0].icon;
+      const temp = Math.round(it.main.temp);
+      return `<div class="threehour-item">
+        <div class="th-time">${time}</div>
+        <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="" />
+        <div class="th-temp">${temp}°C</div>
+      </div>`;
+    })
+    .join("");
+  return `<div id="threehour" class="threehour">${items}</div>`;
+}
+
+function getDirection(deg) {
+  const dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+  return dirs[Math.round(deg / 45) % 8];
+}
+
+function showLoader() {
+  state.elements.loader.classList.remove("hidden");
+  state.elements.weatherCard.classList.add("hidden");
+}
+function hideLoader() {
+  state.elements.loader.classList.add("hidden");
+}

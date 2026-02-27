@@ -1,57 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DailyWeather - Today’s Forecast</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="images/favicon.png">
-
-</head>
-<body>
-    <nav class="nav">
-        <div class="nav-logo">
-            <img src="images/logo.png" alt="">
-            <p>Daily-Weather</p>
-        </div>
-        <div class="nav-search">
-            <input type="text" placeholder="Search your city">
-            <img id="search" src="images/search.svg" alt="search icon">
-        </div>
-    </nav>
-    <main>
-        <div class="weather-data">
-            <div class="weather-info">
-                <p id="updated">Updated: --</p>
-                <p id="description">description</p>
-                <p id="feelslike">feelslike</p>
-                <div style="display: flex; gap: 10px;">
-                    <img class="windimg" src="images/wind.png" alt="">
-                    <span id="windspeed">Wind Speed: -- km/h</span>
-                    <span id="winddirection"></span>
-                </div>
-                <p id="humidity">Humidity: -- %</p>
-                <p id="mintemp">Min: --</p>
-                <p id="maxtemp">Max: --</p>
-            </div>
-            <div class="weather-image">
-                <h1 id="city" style="color:white">City</h1>
-                <h2 id="temperature" style="color:white">--°C</h2>
-                <span class="condition-info">
-                    <p id="condition" style="color:white">Condition</p>
-                    <img id="condition-logo" src="" alt="">
-                </span>
-                <span class="isDay">
-                    <img id="isdaylogo" src="" alt="">
-                    <p id="isday" style="color:white">Day / Night</p> 
-                </span>       
-            </div>
-        </div>
-        <div class="hourly-data">
-
-        </div>
-    </main>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+  </head>
+  <body>
+    <div id="app"></div>
     <script src="apikey.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
